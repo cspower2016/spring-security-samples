@@ -16,19 +16,19 @@ public class CustomAuthProvider implements AuthenticationProvider {
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		System.out.println(authentication);
 
-		//CUSTOM AUTH METHOD
+		// CUSTOM AUTH METHOD
 		String userName = authentication.getName();
 		String password = authentication.getCredentials().toString();
-		
 
 		if (userName.equals("Carlos") && password.equals("123")) {
-			return new UsernamePasswordAuthenticationToken(userName, password,Arrays.asList());
+			System.out.println("Authenticated!!!!!");
+			return new UsernamePasswordAuthenticationToken(userName, password, Arrays.asList());
 		}
 
 		throw new BadCredentialsException("Invalid username or password");
 	}
 
-	//SAYS THAT THIS SUPPORT USER/PASSWORD AUTH
+	// SAYS THAT THIS SUPPORT USER/PASSWORD AUTH
 	@Override
 	public boolean supports(Class<?> authentication) {
 		return authentication.equals(UsernamePasswordAuthenticationToken.class);

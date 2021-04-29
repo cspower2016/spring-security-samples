@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 public class CustomSecurityConf extends WebSecurityConfigurerAdapter {
@@ -16,8 +17,9 @@ public class CustomSecurityConf extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// FORM LOGIN METHOD
-		http.formLogin();
-		http.authorizeRequests().antMatchers("hello").authenticated().anyRequest().permitAll();
+		http.httpBasic();
+		http.authorizeRequests().antMatchers("hello").authenticated();
+		http.addFilterBefore(new CustomSecurityFilter(), BasicAuthenticationFilter.class);
 	}
 
 	// USES A CUSTOM AUTH PROVIDER
